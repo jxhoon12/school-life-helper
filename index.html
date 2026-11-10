@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10172b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SchoolLife Helper">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./icon.svg">
+<title>SchoolLife Helper | 학교생활 게임</title>
+<style>
+:root{--bg:#0a1020;--panel:#131e33;--panel2:#1a2943;--line:#2a3b58;--text:#edf5ff;--muted:#9aacc5;--blue:#60a5fa;--cyan:#67e8f9;--green:#6ee7b7;--gold:#fbbf24;--pink:#f9a8d4}
+*{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}body{margin:0;min-height:100dvh;background:radial-gradient(ellipse at 90% 0%,#1c3158 0,transparent 35%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;padding-bottom:env(safe-area-inset-bottom)}
+button,input,select{font:inherit}button{cursor:pointer;touch-action:manipulation}input,select{font-size:16px}
+.app{max-width:1100px;margin:auto;padding:18px 16px 88px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.brand{display:flex;align-items:center;gap:10px}.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#38bdf8,#6366f1);display:grid;place-items:center;font-size:22px}.brand h1{font-size:20px;margin:0}.sub{font-size:11px;color:var(--muted)}.wallet{background:#192944;border:1px solid #355077;border-radius:14px;padding:8px 12px;font-weight:800;color:#fde68a;white-space:nowrap}
+.hero{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:20px;border:1px solid #38577d;border-radius:20px;background:linear-gradient(120deg,#1a3658,#18213a);margin-bottom:14px}.hero h2{font-size:clamp(21px,4vw,29px);margin:5px 0}.hero p{margin:0;color:#b8c9df;font-size:13px}.level{min-width:150px}.level b{font-size:21px}.bar{height:8px;background:#2b3c59;border-radius:20px;overflow:hidden;margin-top:8px}.bar i{display:block;height:100%;background:linear-gradient(90deg,#38bdf8,#6ee7b7);width:0}
+.nav{display:flex;gap:7px;overflow-x:auto;padding:2px 0 12px;scrollbar-width:none}.nav button{flex:0 0 auto;background:#17243b;color:#b8c9df;border:1px solid #2c3d59;padding:9px 13px;border-radius:999px;font-size:13px}.nav button.active{background:#164e75;color:white;border-color:#38bdf8}
+.page{display:none}.page.active{display:block}.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px}.card{background:rgba(19,30,51,.96);border:1px solid var(--line);border-radius:17px;padding:16px;min-width:0}.s4{grid-column:span 4}.s6{grid-column:span 6}.s8{grid-column:span 8}.s12{grid-column:span 12}.card h3{font-size:16px;margin:0 0 12px}.muted{color:var(--muted);font-size:12px}.stats{display:flex;gap:8px;margin:10px 0}.stat{flex:1;background:#0e192b;border:1px solid #253653;border-radius:12px;padding:10px}.stat b{font-size:21px;display:block}.stat small{font-size:10px;color:var(--muted)}
+.row{display:flex;gap:7px;margin:9px 0}.row>*{min-width:0}.field{width:100%;background:#0c1729;color:var(--text);border:1px solid #344761;border-radius:10px;padding:10px;outline:none}.btn{border:0;border-radius:10px;background:#0284c7;color:white;padding:10px 13px;font-weight:750;min-height:42px;white-space:nowrap}.btn.alt{background:#293b58;color:#e2edff}.btn.good{background:#047857}.btn.warn{background:#92400e}.btn:disabled{opacity:.45;cursor:not-allowed}
+.listitem{display:flex;align-items:center;gap:9px;padding:10px;background:#0d192b;border:1px solid #253653;border-radius:11px;margin:7px 0}.listitem .grow{flex:1;min-width:0}.delete{border:0;background:transparent;color:#9aacc5;font-size:20px;padding:3px 6px}.done{text-decoration:line-through;color:#8092aa}
+.timer{text-align:center;padding:10px}.clock{font-size:58px;font-weight:900;letter-spacing:2px;font-variant-numeric:tabular-nums}.pill{display:inline-block;border-radius:99px;background:#203754;color:#bae6fd;padding:5px 9px;font-size:11px}
+.avatarbox{display:flex;align-items:center;gap:18px;background:linear-gradient(135deg,#1b3859,#18243b);padding:18px;border-radius:16px;border:1px solid #35577c}.avatar{width:105px;height:105px;flex-shrink:0;border-radius:27px;background:linear-gradient(145deg,#334f78,#101b2d);display:grid;place-items:center;font-size:48px;position:relative}.avatar .hat{position:absolute;top:0;right:0;font-size:27px}.avatar .clothes{position:absolute;bottom:0;left:0;font-size:27px}.shopgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.shopitem{background:#0e192b;border:1px solid #2b3d59;border-radius:13px;padding:12px;display:flex;align-items:center;gap:8px}.shopitem .grow{flex:1}.shopitem b{display:block}.shopitem small{color:var(--muted)}
+.gamebox{background:linear-gradient(135deg,#172c49,#202447);border:1px solid #3b5680;border-radius:16px;padding:16px}.game-big{font-size:42px;text-align:center;margin:8px}.game-options{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.game-options button{min-height:55px;font-size:17px}
+table{width:100%;border-collapse:collapse;font-size:12px;min-width:450px}td,th{padding:10px 6px;border-bottom:1px solid var(--line);text-align:center}th{color:#a8c3e3}
+.mapfake{background:linear-gradient(135deg,#132c42,#1d3451);border:1px solid #355476;border-radius:14px;padding:14px}.roomline{display:flex;justify-content:space-between;gap:8px;padding:11px;border-bottom:1px solid #2a3b58}.roomline:last-child{border-bottom:0}
+.toast{position:fixed;bottom:calc(76px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:#e0f2fe;color:#082f49;padding:11px 16px;border-radius:99px;font-weight:800;opacity:0;pointer-events:none;transition:.2s;z-index:20;white-space:nowrap}.toast.show{opacity:1}
+.bottomnav{display:none}
+@media(max-width:760px){
+ .app{padding:12px 11px calc(94px + env(safe-area-inset-bottom))}.top{margin-bottom:12px}.brand h1{font-size:18px}.logo{width:38px;height:38px}.wallet{font-size:12px;padding:7px 9px}
+ .hero{display:block;padding:16px;border-radius:16px}.hero h2{font-size:21px}.level{margin-top:14px;max-width:230px}
+ .grid{grid-template-columns:1fr;gap:10px}.s4,.s6,.s8,.s12{grid-column:1}.card{padding:14px;border-radius:15px}
+ .nav{display:none}.bottomnav{display:flex;position:fixed;z-index:15;left:0;right:0;bottom:0;padding:8px 5px calc(8px + env(safe-area-inset-bottom));background:rgba(8,15,29,.96);border-top:1px solid #30425f;justify-content:space-around;gap:3px;backdrop-filter:blur(12px)}
+ .bottomnav button{background:transparent;color:#9fb2ce;border:0;border-radius:10px;padding:6px 4px;min-width:0;flex:1;font-size:10px}.bottomnav button span{display:block;font-size:19px;margin-bottom:2px}.bottomnav button.active{color:#7dd3fc;background:#172b47}
+ .row{display:grid;grid-template-columns:1fr 1fr}.row .field:only-child{grid-column:1/-1}.row .btn{width:100%}.clock{font-size:54px}.avatarbox{padding:13px;gap:12px}.avatar{width:88px;height:88px;font-size:40px}.shopgrid{grid-template-columns:1fr}
+ .stats .stat{padding:8px}.stats .stat b{font-size:18px}
+}
+@media(max-width:360px){.app{padding-left:8px;padding-right:8px}.card{padding:12px}.wallet{font-size:11px}.game-options button{font-size:15px}}
+
+.login-screen{position:fixed;inset:0;z-index:100;background:radial-gradient(circle at 80% 10%,#234879,#080f1e 60%);display:grid;place-items:center;padding:18px}
+.login-card{width:min(440px,100%);background:#131e33;border:1px solid #38577d;border-radius:22px;padding:24px;box-shadow:0 20px 70px #0008}
+.login-card h2{margin:0 0 6px;font-size:25px}.login-card p{color:#a9bbd4;font-size:13px;line-height:1.5}
+.login-card input{width:100%;margin:7px 0;background:#0c1729;color:white;border:1px solid #344761;border-radius:11px;padding:13px}
+.login-card button{width:100%;margin-top:8px}.login-switch{display:flex;gap:8px;margin:12px 0}.login-switch button{flex:1}
+.login-error{color:#fda4af;min-height:18px;font-size:12px}.app.locked,.bottomnav.locked{display:none!important}
+.avatar .hairpart{position:absolute;top:-9px;left:26px;font-size:25px}.avatar .eyepart{position:absolute;top:35px;left:37px;font-size:13px}.avatar .shoepart{position:absolute;bottom:-8px;right:2px;font-size:22px}.avatar-large{width:112px;height:112px;border-radius:26px;background:linear-gradient(145deg,#46658c,#101b2d);display:grid;place-items:center;font-size:54px;border:2px solid #5a789c}
+.avatar-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.theme-preview{height:62px;border-radius:12px;border:1px solid #456;background:linear-gradient(120deg,#17365d,#27345a)}
+.defense-board{width:100%;height:290px;background:linear-gradient(135deg,#102a35,#172b47);border:1px solid #42617f;border-radius:14px;display:block}
+.defense-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.weapon-card{background:#13243d;border:1px solid #527092;border-radius:12px;padding:12px;font-size:13px;color:#f8fafc;text-align:left;line-height:1.5}.weapon-card b{display:block;color:#ffffff;font-size:15px;margin-bottom:4px}.weapon-card div{color:#e2edff;font-weight:750;margin-bottom:3px}.weapon-card small{display:block;color:#cbd5e1;font-size:12px;font-weight:700}.gacha-panel{background:linear-gradient(135deg,#292052,#173b5a);border:1px solid #7563b5;border-radius:14px;padding:14px}.gacha-item{display:flex;align-items:center;gap:9px;padding:9px;background:#0e192b;border:1px solid #3b5070;border-radius:10px;margin:7px 0}.gacha-item .grow{flex:1}
+.weapon-inventory-item{border-width:2px}
+.weapon-inventory-item.common{border-color:#94a3b8;background:linear-gradient(90deg,#1e293b,#0e192b)}
+.weapon-inventory-item.rare{border-color:#38bdf8;background:linear-gradient(90deg,#123b5a,#0e192b)}
+.weapon-inventory-item.epic{border-color:#a78bfa;background:linear-gradient(90deg,#38235e,#0e192b)}
+.weapon-inventory-item.mythic{border-color:#f472b6;background:linear-gradient(90deg,#572344,#0e192b)}
+.weapon-inventory-item.legendary{border-color:#f59e0b;background:linear-gradient(90deg,#5b3510,#0e192b)}
+.weapon-inventory-item.ancient{border-color:#22c55e;background:linear-gradient(90deg,#16452f,#0e192b)}
+.weapon-inventory-item.transcendent{border-color:#fef08a;background:linear-gradient(90deg,#51451a,#211b3c)}
+.weapon-shape{display:grid;place-items:center;width:48px;height:48px;flex:0 0 48px;border-radius:12px;background:#ffffff12;font-size:30px;filter:drop-shadow(0 2px 5px #0008)}
+.weapon-inventory-item b{display:block;color:#fff}.weapon-inventory-item small{display:block;color:#dbeafe;margin-top:3px}
+.weapon-count{color:#fde68a;font-size:16px;white-space:nowrap;padding:0 5px}
+.rarity-tag{font-weight:800;color:#fde68a}.coupon-pill{display:inline-flex;align-items:center;gap:5px;background:#4a2f12;color:#fde68a;border:1px solid #a16207;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800}
+@media(max-width:520px){.login-card{padding:18px}.avatar-controls{grid-template-columns:1fr 1fr}.defense-board{height:250px}}
+
+</style></head>
+<body>
+<div class="login-screen" id="loginScreen">
+ <div class="login-card">
+  <div style="font-size:38px">🎒</div>
+  <h2>SchoolLife Helper</h2>
+  <p>학교생활을 게임처럼! 아이디와 비밀번호로 시작해 봐.</p>
+  <div class="login-switch"><button class="btn" id="showLogin">로그인</button><button class="btn alt" id="showSignup">회원가입</button></div>
+  <input id="authEmail" type="text" autocomplete="username" placeholder="아이디 (ID)">
+  <input id="authPassword" type="password" autocomplete="current-password" placeholder="비밀번호 (PW)">
+  <input id="authPassword2" type="password" autocomplete="new-password" placeholder="비밀번호 확인" style="display:none">
+  <button class="btn" id="authSubmit">로그인</button>
+  <div class="login-error" id="authError"></div>
+  <p class="muted">계정은 현재 브라우저에 저장되는 체험형 로그인입니다. 기기 간 계정 동기화와 실제 보안 인증에는 서버 연결이 필요합니다.</p>
+ </div>
+</div>
+<main class="app locked" id="mainApp">
+<header class="top"><div class="brand"><div class="logo">🎒</div><div><h1>SchoolLife Helper</h1><div class="sub">공부도 게임처럼, 학교생활은 더 편하게!</div></div></div><div class="wallet">🪙 <span id="coins">50</span> P　🎟️ <span id="gameCoupons">0</span></div></header>
+<section class="hero"><div><span class="pill">MY SCHOOL LIFE</span><h2>오늘도 레벨 업! ✨</h2><p>공부하고 미션을 깨서 나만의 캐릭터를 꾸며 봐.</p></div><div class="level"><b id="level">Lv. 1</b><div class="muted" id="xptext">0 / 100 XP</div><div class="bar"><i id="xpbar"></i></div></div></section>
+<nav class="nav" id="topnav"></nav>
+<section class="page active" id="page-home"><div class="grid">
+<div class="card s8"><h3>✅ 오늘의 할 일</h3><div class="stats"><div class="stat"><b id="taskTotal">0</b><small>전체</small></div><div class="stat"><b id="taskDone">0</b><small>완료</small></div><div class="stat"><b id="taskPct">0%</b><small>진행률</small></div></div><div class="row"><input id="taskInput" class="field" placeholder="예: 영어 단어 20개 외우기"><button class="btn" id="taskAdd">추가</button></div><div id="taskList"></div></div>
+<div class="card s4"><h3>⏱️ 집중 타이머</h3><div class="timer"><div class="clock" id="clock">05:00</div><div class="muted" id="timerText">5분 집중 도전!</div><div class="row"><button class="btn" id="timerToggle">시작</button><button class="btn alt" id="timerReset">초기화</button></div></div><div class="muted">완료하면 +15P, +20XP! 공부 10분마다 게임 쿠폰 1개 🎟️</div><div class="coupon-pill">보유 게임 쿠폰: <b id="timerCoupons">0</b>개</div>
+<div class="row"><select id="timerPreset" class="field"><option value="300" selected>5분</option><option value="600">10분</option><option value="900">15분</option><option value="1200">20분</option><option value="1500">25분</option><option value="1800">30분</option><option value="2100">35분</option><option value="2400">40분</option><option value="2700">45분</option><option value="3000">50분</option><option value="3300">55분</option><option value="3600">60분</option><option value="3900">65분</option><option value="4200">70분</option><option value="4500">75분</option><option value="4800">80분</option><option value="5100">85분</option><option value="5400">90분</option><option value="5700">95분</option><option value="6000">100분</option><option value="6300">105분</option><option value="6600">110분</option><option value="6900">115분</option><option value="7200">120분</option></select><button class="btn alt" id="timerApply">시간 적용</button></div>
+<div class="muted">차이머는 짧은 휴식·준비 시간에도 사용할 수 있어.</div></div>
+<div class="card s6"><h3>📅 시간표</h3><div class="row"><select id="day" class="field"><option>월</option><option>화</option><option>수</option><option>목</option><option>금</option></select><input id="subject" class="field" placeholder="과목명"><button id="subjectAdd" class="btn">추가</button></div><div style="overflow:auto"><table><thead><tr><th>요일</th><th>1교시</th><th>2교시</th><th>3교시</th><th>4교시</th></tr></thead><tbody id="timetable"></tbody></table></div></div>
+<div class="card s6"><h3>🎯 시험 D-Day</h3><div class="row"><input id="examName" class="field" placeholder="시험 이름"><input id="examDate" class="field" type="date"><button id="examAdd" class="btn">등록</button></div><div id="examList"></div></div>
+<div class="card s12"><h3>🎁 오늘의 미션</h3><div class="row"><div class="grow" id="mission">쉬는 시간에 스트레칭하기!</div><button class="btn alt" id="missionNew">미션 바꾸기</button><button class="btn good" id="missionDone">완료 +5P</button></div></div>
+</div></section>
+<section class="page" id="page-battle"><div class="grid">
+<div class="card s12"><h3>⚔️ 공부 시합</h3><p class="muted">혼자 기록을 쌓거나 친구와 같은 목표 시간을 정해 대결해 봐. 현재는 한 기기에서 점수를 비교하는 로컬 대결이야.</p><div class="gamebox"><div class="stats"><div class="stat"><b id="myMinutes">0분</b><small>내 공부 시간</small></div><div class="stat"><b id="opMinutes">0분</b><small>친구 기록(직접 입력)</small></div><div class="stat"><b id="battleResult">대기 중</b><small>대결 결과</small></div></div><div class="row"><input id="friendMinutes" class="field" type="number" min="0" max="1440" placeholder="친구 공부 시간(분)"><button class="btn" id="setFriend">친구 기록 저장</button><button class="btn good" id="compare">대결 결과 보기</button></div><div class="muted" id="battleMessage">집중 타이머를 완료하고 기록을 모아 봐!</div></div></div>
+<div class="card s6"><h3>🏁 오늘의 목표</h3><div class="row"><select id="studyGoal" class="field"><option value="30">30분</option><option value="60">1시간</option><option value="90">1시간 30분</option><option value="120">2시간</option></select><button class="btn" id="goalSet">목표 설정</button></div><div class="bar"><i id="goalBar"></i></div><p class="muted" id="goalText">목표를 정해 봐!</p></div>
+<div class="card s6"><h3>🏅 연속 공부 기록</h3><div class="stats"><div class="stat"><b id="studySessions">0회</b><small>완료한 집중 세션</small></div><div class="stat"><b id="studyBest">0분</b><small>누적 공부 시간</small></div></div><p class="muted">선택한 타이머를 끝까지 완료하면 공부 시간과 쿠폰이 누적돼.</p></div>
+</div></section>
+<section class="page" id="page-games"><div class="grid">
+<div class="card s6"><h3>🧠 숫자 기억하기</h3><p class="muted">숫자를 잠깐 외웠다가 정답을 입력해 봐!</p><div class="gamebox"><div class="game-big" id="memoryNumber">준비됐어?</div><div class="row"><button class="btn" id="memoryStart">게임 시작</button><input id="memoryAnswer" class="field" placeholder="숫자 입력" inputmode="numeric"><button class="btn good" id="memoryCheck">정답 확인</button></div><div class="muted" id="memoryMsg">맞히면 +5P!</div></div></div>
+<div class="card s6"><h3>✊ 가위바위보</h3><p class="muted">컴퓨터와 한 판 승부!</p><div class="gamebox"><div class="game-big" id="rpsResult">❔</div><div class="game-options"><button class="btn alt" data-rps="가위">✌️ 가위</button><button class="btn alt" data-rps="바위">✊ 바위</button><button class="btn alt" data-rps="보">✋ 보</button><button class="btn" id="rpsClear">다시 하기</button></div><div class="muted" id="rpsMsg">이기면 +5P!</div></div></div>
+<div class="card s12"><h3>🟡 반응속도 테스트</h3><div class="gamebox"><div class="game-big" id="reactionArea">준비되면 시작!</div><div class="row"><button class="btn" id="reactionStart">시작</button><button class="btn good" id="reactionTap" disabled>지금 누르기!</button></div><div class="muted" id="reactionMsg">초록색으로 바뀌면 최대한 빨리 눌러!</div></div></div>
+</div></section>
+<section class="page" id="page-character"><div class="grid">
+<div class="card s6"><h3>🧑‍🚀 내 캐릭터</h3><div class="avatarbox"><div class="avatar"><span id="avatarFace">😎</span><span class="hairpart" id="avatarHair">💇🏻‍♂️</span><span class="eyepart" id="avatarEyes">👀</span><span class="hat" id="avatarHat">🧢</span><span class="clothes" id="avatarClothes">👕</span><span class="shoepart" id="avatarShoes">👟</span></div><div><b id="avatarName">새내기 학생</b><p class="muted">공부하고 포인트를 모아 꾸며 봐!</p></div></div></div>
+<div class="card s6"><h3>🎨 캐릭터 꾸미기</h3><div class="row"><select id="faceSelect" class="field"><option>😎</option><option>😊</option><option>🤓</option><option>🥷</option><option>🐱</option><option>🐸</option></select><select id="hatSelect" class="field"><option>🧢</option><option>👑</option><option>🎧</option><option>🎓</option><option>🪖</option></select><select id="clothesSelect" class="field"><option>👕</option><option>🥋</option><option>🧥</option><option>🦺</option><option>🦸</option></select><button class="btn" id="equip">착용하기</button></div><p class="muted">남자 캐릭터의 얼굴, 헤어, 눈, 색상, 옷, 신발을 자유롭게 바꿔 봐.</p>
+ <div class="avatar-controls">
+ <select id="hairSelect" class="field"><option>💇🏻‍♂️</option><option>🦱</option><option>🦰</option><option>🧑‍🦱</option><option>🪮</option><option>🧢</option></select>
+ <select id="eyeSelect" class="field"><option>👀</option><option>😎</option><option>🤓</option><option>🥺</option><option>😠</option></select>
+ <select id="eyeColorSelect" class="field"><option>갈색 눈</option><option>파란 눈</option><option>초록 눈</option><option>회색 눈</option><option>빨간 눈</option></select>
+ <select id="hairColorSelect" class="field"><option>검은 머리</option><option>갈색 머리</option><option>금발</option><option>은발</option><option>파란 머리</option><option>빨간 머리</option></select>
+ <select id="shoeSelect" class="field"><option>👟</option><option>🥾</option><option>👞</option><option>🛼</option><option>👢</option></select>
+ <select id="styleSelect" class="field"><option>남학생 기본</option><option>스포츠 선수</option><option>전투 요원</option><option>마법사</option><option>정장</option></select>
+ </div></div>
+<div class="card s12"><h3>🎲 캐릭터 뽑기</h3><div class="gacha-panel"><p class="muted" style="color:#e9ddff">1회 50P · 기본부터 초월까지! 획득한 아이템은 아래 보관함에서 착용할 수 있어.</p><div class="row"><button class="btn" id="gachaDraw">50P로 캐릭터 1회 뽑기</button><b id="gachaResult" style="align-self:center">행운을 시험해 봐!</b></div><div id="gachaInventory"></div><hr><p class="muted" style="color:#e9ddff">⚔️ 무기 뽑기 · 1회 50P · 무기는 보관함에 저장돼.</p><div class="row"><button class="btn" id="weaponGachaDraw">50P로 무기 1회 뽑기</button><b id="weaponGachaResult">강력한 무기를 노려 봐!</b></div><div id="weaponGachaInventory"></div></div></div>
+<div class="card s12"><h3>🛍️ 아이템 상점</h3><div class="shopgrid" id="shopList"></div></div>
+<div class="card s12"><h3>🌌 배경 꾸미기</h3><div class="shopgrid" id="backgroundShop"></div></div>
+</div></section>
+<section class="page" id="page-lost"><div class="grid"><div class="card s12"><h3>🔎 분실물 찾기</h3><p class="muted">분실물이나 습득물을 등록하고 검색해 봐. 실제 다른 학생에게 공유되는 게시판은 아니야.</p><div class="row"><input id="lostName" class="field" placeholder="물건 이름"><input id="lostPlace" class="field" placeholder="장소 (예: 2층 복도)"><input id="lostNote" class="field" placeholder="색깔·특징 (선택)"><button class="btn" id="lostAdd">등록</button></div><div class="row"><input id="lostSearch" class="field" placeholder="물건·장소 검색"></div><div id="lostList"></div></div></div></section>
+<section class="page" id="page-room"><div class="grid"><div class="card s12"><h3>🧭 교실 찾기</h3><p class="muted">네 학교의 교실 정보를 직접 등록하면 과목이나 선생님으로 빠르게 찾을 수 있어.</p><div class="row"><input id="roomSubject" class="field" placeholder="과목"><input id="roomTeacher" class="field" placeholder="선생님(선택)"><input id="roomLocation" class="field" placeholder="교실 위치 (예: 본관 3층)"><button class="btn" id="roomAdd">추가</button></div><div class="row"><input id="roomSearch" class="field" placeholder="과목·선생님·위치 검색"></div><div id="roomList"></div></div></div></section>
+<section class="page" id="page-defense"><div class="grid">
+<div class="card s12"><h3>🛡️ 과목 디펜스</h3><p class="muted">50×50 전장에서 중앙의 체력 500 코어를 지켜라! 괴물은 동서남북 네 방향에서 몰려와. 무기를 선택하고 칸을 눌러 포탑을 배치해.</p><div class="coupon-pill">🎟️ 게임 쿠폰 <b id="defCoupons">0</b>개 · 전투 시작 시 1개 사용</div>
+<div class="stats"><div class="stat"><b id="defGold">100</b><small>전투 코인</small></div><div class="stat"><b id="defWave">1</b><small>웨이브</small></div><div class="stat"><b id="defLives">10</b><small>중앙 코어 체력</small></div></div>
+<canvas id="defenseCanvas" class="defense-board" width="500" height="500"></canvas>
+<div class="row"><button class="btn good" id="defStart">전투 시작</button><button class="btn alt" id="defNext">다음 웨이브</button><button class="btn warn" id="defReset">초기화</button></div><div class="muted" id="defMessage">무기를 고른 뒤 전장에 포탑을 배치해 봐.</div></div>
+<div class="card s6"><h3>📚 과목 무기 선택</h3><div class="defense-controls" id="weaponChoices"></div></div>
+<div class="card s6"><h3>⭐ 무기 등급</h3><div class="weapon-card">⚪ 기본 · 🟢 레어 · 🔵 에픽 · 🟣 신화 · 🟠 전설 · 🔴 고대 · 🌈 초월</div><p class="muted">등급이 높을수록 공격력과 사거리가 증가해. 몬스터를 처치해 코인을 모으고 포탑을 더 배치해.</p><div id="towerList"></div></div>
+</div></section>
+
+<section class="page" id="page-admin"><div class="grid">
+<div class="card s12"><h3>👑 AK 마스터 콘솔</h3><p class="muted">마스터 계정 전용 관리 화면이야. 이 브라우저에 저장된 로컬 계정과 데이터를 관리해.</p>
+<div class="stats"><div class="stat"><b>∞</b><small>무제한 포인트</small></div><div class="stat"><b>ALL</b><small>전체 아이템</small></div><div class="stat"><b>관리자</b><small>권한</small></div></div>
+</div>
+<div class="card s6"><h3>💰 포인트 관리</h3><input id="adminUserEmail" class="field" placeholder="대상 사용자 ID"><input id="adminPointAmount" class="field" type="number" min="0" placeholder="지급할 포인트"><button class="btn good" id="adminGivePoints">포인트 지급</button><div class="muted" id="adminPointMsg"></div></div>
+<div class="card s6"><h3>🧰 사용자 관리</h3><p class="muted">가입된 로컬 계정 조회 및 계정 데이터 초기화/삭제</p><button class="btn alt" id="adminRefreshUsers">사용자 목록 새로고침</button><div id="adminUsers"></div></div>
+<div class="card s12"><h3>🧹 데이터 관리</h3><button class="btn warn" id="adminResetOwn">마스터 내 학교생활 데이터 초기화</button><p class="muted">사용자 데이터는 이 브라우저에 저장된 범위에서만 관리할 수 있어. 여러 기기에서 공유되는 서버 계정 관리는 아직 연결되지 않았어.</p></div>
+</div></section>
+</main>
+<nav class="bottomnav locked" id="bottomnav">
+<button data-page="home" class="active"><span>🏠</span>홈</button><button data-page="battle"><span>⚔️</span>시합</button><button data-page="games"><span>🎮</span>미니게임</button><button data-page="character"><span>🧑‍🚀</span>캐릭터</button><button data-page="lost"><span>🔎</span>분실물</button><button data-page="room"><span>🏫</span>교실</button><button data-page="defense"><span>🛡️</span>디펜스</button>
+</nav><div class="toast" id="toast"></div>
+<script>
+const $=id=>document.getElementById(id),KEY='schoollife-helper-v2';
+const defaults={points:50,xp:0,tasks:[],subjects:{월:[],화:[],수:[],목:[],금:[]},exams:[],lost:[],rooms:[],face:'😎',hat:'🧢',clothes:'👕',owned:[],gachaInventory:[],weaponInventory:[],equippedWeapon:null,gameCoupons:0,studyCouponRemainder:0,studyMinutes:0,sessions:0,friendMinutes:0,goal:60,missionDone:false,hair:'💇🏻‍♂️',eye:'👀',eyeColor:'갈색 눈',hairColor:'검은 머리',shoe:'👟',style:'남학생 기본',background:'기본 배경',defense:{gold:100,wave:1,lives:500,coreHP:500,towers:[],enemies:[],running:false}};
+let d={...defaults}, currentEmail='', isMaster=false;
+function dataKey(email){return KEY+':'+email.toLowerCase()}
+function save(){if(currentEmail)localStorage.setItem(dataKey(currentEmail),JSON.stringify(d))}
+async function passwordHash(password,salt){
+ const enc=new TextEncoder(),key=await crypto.subtle.importKey('raw',enc.encode(password),'PBKDF2',false,['deriveBits']);
+ const bits=await crypto.subtle.deriveBits({name:'PBKDF2',salt:enc.encode(salt),iterations:120000,hash:'SHA-256'},key,256);
+ return [...new Uint8Array(bits)].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+const ACCOUNT_KEY='schoollife-helper-accounts-v1';
+function accounts(){try{return JSON.parse(localStorage.getItem(ACCOUNT_KEY)||'{}')}catch{return {}}}
+let authMode='login';
+function setAuthMode(mode){authMode=mode;$('authPassword2').style.display=mode==='signup'?'block':'none';$('authSubmit').textContent=mode==='signup'?'회원가입':'로그인';$('authError').textContent='';$('showLogin').className='btn '+(mode==='login'?'':'alt');$('showSignup').className='btn '+(mode==='signup'?'':'alt')}
+$('showLogin').onclick=()=>setAuthMode('login');$('showSignup').onclick=()=>setAuthMode('signup');
+async function enterApp(email){
+ currentEmail=email.toLowerCase();isMaster=(currentEmail==='master');let saved=localStorage.getItem(dataKey(currentEmail));
+ if(saved){try{d={...defaults,...JSON.parse(saved)}}catch{d={...defaults}}}
+ else {d={...defaults};}
+ d.gameCoupons=Number(d.gameCoupons)||0;d.studyCouponRemainder=Number(d.studyCouponRemainder)||0;d.gachaInventory=Array.isArray(d.gachaInventory)?d.gachaInventory:[];
+ if(isMaster){d.points=999999999;d.gameCoupons=999999999;d.owned=[...new Set([...(d.owned||[]),...shop.map(x=>x.id),'bg0','bg1','bg2','bg3','bg4'])];}
+ $('loginScreen').style.display='none';$('mainApp').classList.remove('locked');$('bottomnav').classList.remove('locked');
+ render();clock();renderDefense();
+ if(isMaster){
+  if(!pages.some(x=>x[0]==='admin'))pages.push(['admin','👑 마스터']);
+  $('topnav').innerHTML=pages.map(([id,label])=>`<button data-page="${id}">${label}</button>`).join('');
+  document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>goPage(b.dataset.page));
+  const bn=document.querySelector('.bottomnav');if(bn&&!$('adminBottom')){let b=document.createElement('button');b.id='adminBottom';b.dataset.page='admin';b.innerHTML='<span>👑</span>마스터';bn.append(b);b.onclick=()=>goPage('admin')}
+  renderAdminUsers();
+ }
+ if(d.background==='우주 배경')document.body.style.background='linear-gradient(120deg,#25145a,#07152f)';else if(d.background==='불꽃 배경')document.body.style.background='linear-gradient(120deg,#7c2d12,#431407)';else if(d.background==='숲속 배경')document.body.style.background='linear-gradient(120deg,#14532d,#052e16)';else if(d.background==='사이버 배경')document.body.style.background='linear-gradient(120deg,#164e63,#312e81)';toast('환영해! '+currentEmail);
+}
+$('authSubmit').onclick=async()=>{
+ const email=$('authEmail').value.trim().toLowerCase(),pw=$('authPassword').value;
+ if(authMode==='login'&&email==='master'){
+  if(pw!=='111'){$('authError').textContent='아이디 또는 비밀번호가 올바르지 않아.';return}
+  isMaster=true;enterApp('master');return;
+ }
+ if(!/^[a-zA-Z0-9_-]{3,20}$/.test(email)){ $('authError').textContent='아이디는 영문·숫자·_·-로 3~20자 입력해 줘.';return}
+ if(pw.length<4){$('authError').textContent='비밀번호는 4자 이상 입력해 줘.';return}
+ let a=accounts();
+ try{
+  if(authMode==='signup'){
+   if(a[email]){$('authError').textContent='이미 가입된 아이디야. 로그인해 줘.';return}
+   if(pw!==$('authPassword2').value){$('authError').textContent='비밀번호가 서로 달라.';return}
+   const salt=crypto.randomUUID();a[email]={salt,hash:await passwordHash(pw,salt)};
+   localStorage.setItem(ACCOUNT_KEY,JSON.stringify(a));
+  }else{
+   if(!a[email]){$('authError').textContent='가입된 아이디가 없어. 먼저 회원가입해 줘.';return}
+   if(await passwordHash(pw,a[email].salt)!==a[email].hash){$('authError').textContent='아이디 또는 비밀번호가 올바르지 않아.';return}
+  }
+  enterApp(email);
+ }catch(e){$('authError').textContent='로그인 기능을 사용하려면 HTTPS 또는 localhost 환경에서 열어 줘.'}
+};
+function toast(t){$('toast').textContent=t;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1700)}
+const pages=[['home','🏠 홈'],['battle','⚔️ 공부 시합'],['games','🎮 미니게임'],['character','🧑‍🚀 캐릭터'],['lost','🔎 분실물'],['room','🏫 교실'],['defense','🛡️ 디펜스']];
+function goPage(p){document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id==='page-'+p));document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===p));window.scrollTo({top:0,behavior:'smooth'})}
+$('topnav').innerHTML=pages.map(([id,label])=>`<button data-page="${id}">${label}</button>`).join('');
+document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>goPage(b.dataset.page));
+function renderStats(){ $('coins').textContent=isMaster?'∞':d.points;$('gameCoupons').textContent=isMaster?'∞':(d.gameCoupons||0);if($('timerCoupons'))$('timerCoupons').textContent=isMaster?'∞':(d.gameCoupons||0);if($('defCoupons'))$('defCoupons').textContent=isMaster?'∞':(d.gameCoupons||0);$('level').textContent='Lv. '+(Math.floor(d.xp/100)+1);$('xptext').textContent=(d.xp%100)+' / 100 XP';$('xpbar').style.width=(d.xp%100)+'%';}
+function renderTasks(){let done=d.tasks.filter(x=>x.done).length;$('taskTotal').textContent=d.tasks.length;$('taskDone').textContent=done;$('taskPct').textContent=(d.tasks.length?Math.round(done/d.tasks.length*100):0)+'%';let box=$('taskList');box.innerHTML='';d.tasks.forEach(t=>{let row=document.createElement('div');row.className='listitem';let cb=document.createElement('input');cb.type='checkbox';cb.checked=t.done;cb.onchange=()=>{t.done=cb.checked;if(t.done){d.points+=5;d.xp+=10;toast('할 일 완료! +5P +10XP')}save();render()};let name=document.createElement('span');name.className='grow'+(t.done?' done':'');name.textContent=t.name;let del=document.createElement('button');del.className='delete';del.textContent='×';del.onclick=()=>{d.tasks=d.tasks.filter(x=>x.id!==t.id);save();renderTasks()};row.append(cb,name,del);box.append(row)});if(!d.tasks.length)box.innerHTML='<div class="muted">할 일을 추가해 보자!</div>'}
+function renderTable(){let b=$('timetable');b.innerHTML='';['월','화','수','목','금'].forEach(day=>{let tr=document.createElement('tr');let td=document.createElement('td');td.textContent=day;tr.append(td);for(let i=0;i<4;i++){let c=document.createElement('td');c.textContent=d.subjects[day]?.[i]||'—';tr.append(c)}b.append(tr)})}
+function renderExams(){let box=$('examList');box.innerHTML='';d.exams.forEach(e=>{let n=Math.ceil((new Date(e.date+'T00:00:00')-new Date(new Date().toDateString()))/86400000),r=document.createElement('div');r.className='listitem';let a=document.createElement('span');a.className='grow';a.textContent=e.name;let b=document.createElement('b');b.style.color='#fbbf24';b.textContent=n>0?'D-'+n:n===0?'D-DAY':'종료';let x=document.createElement('button');x.className='delete';x.textContent='×';x.onclick=()=>{d.exams=d.exams.filter(v=>v.id!==e.id);save();renderExams()};r.append(a,b,x);box.append(r)});if(!d.exams.length)box.innerHTML='<div class="muted">시험을 등록해 봐.</div>'}
+function renderLost(){let q=$('lostSearch').value.toLowerCase(),box=$('lostList');box.innerHTML='';d.lost.filter(x=>(x.name+' '+x.place+' '+x.note).toLowerCase().includes(q)).slice().reverse().forEach(x=>{let r=document.createElement('div');r.className='listitem';let info=document.createElement('span');info.className='grow';info.innerHTML='';let b=document.createElement('b');b.textContent=x.name;let sm=document.createElement('div');sm.className='muted';sm.textContent='📍 '+x.place+(x.note?' · '+x.note:'');info.append(b,sm);let st=document.createElement('span');st.className='pill';st.textContent=x.done?'주인 찾음':'찾는 중';let bt=document.createElement('button');bt.className='btn alt';bt.textContent=x.done?'취소':'찾았어요';bt.onclick=()=>{x.done=!x.done;save();renderLost()};let del=document.createElement('button');del.className='delete';del.textContent='×';del.onclick=()=>{d.lost=d.lost.filter(y=>y.id!==x.id);save();renderLost()};r.append(info,st,bt,del);box.append(r)});if(!box.children.length)box.innerHTML='<div class="muted">검색 결과가 없어. 물건을 등록해 봐.</div>'}
+function renderRooms(){let q=$('roomSearch').value.toLowerCase(),box=$('roomList');box.innerHTML='';d.rooms.filter(x=>(x.subject+' '+x.teacher+' '+x.location).toLowerCase().includes(q)).forEach(x=>{let r=document.createElement('div');r.className='roomline';let a=document.createElement('div');a.innerHTML='';let b=document.createElement('b');b.textContent=x.subject;let sm=document.createElement('div');sm.className='muted';sm.textContent=(x.teacher?x.teacher+' 선생님 · ':'')+x.location;a.append(b,sm);let del=document.createElement('button');del.className='delete';del.textContent='×';del.onclick=()=>{d.rooms=d.rooms.filter(y=>y.id!==x.id);save();renderRooms()};r.append(a,del);box.append(r)});if(!box.children.length)box.innerHTML='<div class="muted">교실 정보를 추가해 봐.</div>'}
+const shop=[{id:'crown',icon:'👑',name:'왕관',price:25,part:'hat'},{id:'headphone',icon:'🎧',name:'헤드셋',price:20,part:'hat'},{id:'grad',icon:'🎓',name:'졸업모',price:30,part:'hat'},{id:'ninja',icon:'🥷',name:'닌자 옷',price:35,part:'clothes'},{id:'jacket',icon:'🧥',name:'멋진 재킷',price:25,part:'clothes'},{id:'hero',icon:'🦸',name:'히어로 의상',price:45,part:'clothes'}];
+const gachaPool=[
+ {name:'새싹 헤어',icon:'🌱',part:'hair',rarity:'기본',weight:35},{name:'불꽃 헤어',icon:'🔥',part:'hair',rarity:'레어',weight:22},{name:'은하의 눈',icon:'🌌',part:'eye',rarity:'에픽',weight:15},{name:'황금 왕관',icon:'👑',part:'hat',rarity:'신화',weight:10},{name:'드래곤 갑옷',icon:'🐉',part:'clothes',rarity:'전설',weight:8},{name:'천사의 날개',icon:'🪽',part:'clothes',rarity:'고대',weight:5},{name:'초월의 오라',icon:'✨',part:'face',rarity:'초월',weight:3},{name:'번개 부츠',icon:'⚡',part:'shoe',rarity:'전설',weight:2}
+];
+function renderGachaInventory(){const box=$('gachaInventory');if(!box)return;box.innerHTML='<b>🎒 뽑기 보관함 ('+(d.gachaInventory||[]).length+')</b>';if(!(d.gachaInventory||[]).length){box.innerHTML+='<p class="muted" style="color:#d8d3ef">아직 획득한 아이템이 없어.</p>';return}(d.gachaInventory||[]).forEach((it,index)=>{let row=document.createElement('div');row.className='gacha-item';let icon=document.createElement('span');icon.style.fontSize='25px';icon.textContent=it.icon;let info=document.createElement('span');info.className='grow';let name=document.createElement('b');name.textContent=it.name;let sub=document.createElement('div');sub.className='muted';sub.textContent=it.rarity+' · '+({hair:'헤어',eye:'눈',hat:'모자',clothes:'옷',face:'얼굴',shoe:'신발'}[it.part]||'아이템');info.append(name,sub);let equip=document.createElement('button');equip.className='btn alt';equip.textContent='착용';equip.onclick=()=>{d[it.part]=it.icon;save();renderCharacter();toast(it.name+' 착용 완료!')};row.append(icon,info,equip);box.append(row)})}
+function drawGacha(){if(!isMaster&&d.points<50){toast('포인트가 부족해! 50P가 필요해.');return}if(!isMaster)d.points-=50;let total=gachaPool.reduce((a,x)=>a+x.weight,0),r=Math.random()*total,item=gachaPool.find(x=>(r-=x.weight)<=0)||gachaPool[0];let owned=d.gachaInventory||[];let duplicate=owned.some(x=>x.name===item.name);if(duplicate){if(!isMaster)d.points+=10;$('gachaResult').textContent=item.icon+' '+item.name+' 중복! 10P 환급';}else{d.gachaInventory.push({name:item.name,icon:item.icon,part:item.part,rarity:item.rarity});$('gachaResult').textContent=item.icon+' '+item.name+' 획득! ['+item.rarity+']';}save();renderStats();renderGachaInventory()}
+$('gachaDraw').onclick=drawGacha;
+const weaponGachaPool=[
+ {name:'나무 연습검',icon:'🪵',shape:'🪵',subject:'수학',rarity:'일반',damage:12,weight:14},
+ {name:'철제 단검',icon:'🗡️',shape:'🗡️',subject:'영어',rarity:'일반',damage:13,weight:13},
+ {name:'훈련용 방패검',icon:'🛡️',shape:'🛡️',subject:'체육',rarity:'일반',damage:14,weight:13},
+ {name:'쌍날 강철검',icon:'⚔️',shape:'⚔️',subject:'역사',rarity:'레어',damage:20,weight:9},
+ {name:'정밀 석궁',icon:'🏹',shape:'🏹',subject:'과학',rarity:'레어',damage:21,weight:8},
+ {name:'독침 블레이드',icon:'🔪',shape:'🔪',subject:'사회',rarity:'레어',damage:22,weight:8},
+ {name:'폭풍 장궁',icon:'🌩️',shape:'🏹',subject:'과학',rarity:'에픽',damage:30,weight:5},
+ {name:'화염 쌍검',icon:'🔥',shape:'🔥',subject:'체육',rarity:'에픽',damage:32,weight:5},
+ {name:'마력 지팡이',icon:'🪄',shape:'🪄',subject:'국어',rarity:'에픽',damage:34,weight:5},
+ {name:'별빛 마도서',icon:'📕',shape:'📕',subject:'국어',rarity:'신화',damage:42,weight:3},
+ {name:'빙결 창',icon:'❄️',shape:'🔱',subject:'과학',rarity:'신화',damage:44,weight:3},
+ {name:'천둥 해머',icon:'⚡',shape:'🔨',subject:'수학',rarity:'신화',damage:46,weight:3},
+ {name:'태양의 대검',icon:'☀️',shape:'⚔️',subject:'역사',rarity:'전설',damage:55,weight:2},
+ {name:'용의 활',icon:'🐉',shape:'🏹',subject:'영어',rarity:'전설',damage:58,weight:2},
+ {name:'불멸의 창',icon:'🔱',shape:'🔱',subject:'체육',rarity:'전설',damage:60,weight:2},
+ {name:'고대 룬검',icon:'🗿',shape:'🗡️',subject:'역사',rarity:'고대',damage:70,weight:1},
+ {name:'심연의 낫',icon:'🌑',shape:'🌙',subject:'사회',rarity:'고대',damage:74,weight:1},
+ {name:'시간 균열포',icon:'🌀',shape:'🌀',subject:'과학',rarity:'고대',damage:78,weight:1},
+ {name:'초월 차원검',icon:'💠',shape:'💠',subject:'수학',rarity:'초월',damage:100,weight:0.67},
+ {name:'창조의 광선포',icon:'🌌',shape:'🌌',subject:'과학',rarity:'초월',damage:105,weight:0.67},
+ {name:'무한의 건틀릿',icon:'♾️',shape:'♾️',subject:'체육',rarity:'초월',damage:110,weight:0.66}
+];
+function renderWeaponGachaInventory(){
+ const box=$('weaponGachaInventory');if(!box)return;
+ const inventory=d.weaponInventory||[];
+ box.innerHTML='<b>🗡️ 무기 보관함 · 총 '+inventory.length+'개</b>';
+ if(!inventory.length){box.innerHTML+='<p class="muted" style="color:#d8d3ef">아직 무기가 없어.</p>';return}
+ const grouped={};inventory.forEach(w=>{const key=w.name+'|'+w.rarity;grouped[key]=grouped[key]||{...w,count:0};grouped[key].count++});
+ const rarityClass={'일반':'common','레어':'rare','에픽':'epic','신화':'mythic','전설':'legendary','고대':'ancient','초월':'transcendent'};
+ Object.values(grouped).forEach(w=>{
+  const row=document.createElement('div');row.className='gacha-item weapon-inventory-item '+(rarityClass[w.rarity]||'common');
+  const ico=document.createElement('span');ico.className='weapon-shape';ico.textContent=w.shape||w.icon;
+  const info=document.createElement('span');info.className='grow';
+  const name=document.createElement('b');name.textContent=w.name;
+  const meta=document.createElement('small');meta.textContent=w.subject+' · '+w.rarity+' · 공격력 '+w.damage;
+  const count=document.createElement('strong');count.className='weapon-count';count.textContent='×'+w.count;
+  info.append(name,meta);const btn=document.createElement('button');btn.className='btn alt';btn.textContent=d.equippedWeapon===w.name?'장착 중':'장착';
+  btn.onclick=()=>{d.equippedWeapon=w.name;save();renderWeaponGachaInventory();toast(w.name+' 장착 완료!')};
+  row.append(ico,info,count,btn);box.append(row)
+ })
+}
+function drawWeaponGacha(){if(!isMaster&&d.points<50){toast('포인트가 부족해! 50P가 필요해.');return}if(!isMaster)d.points-=50;let total=weaponGachaPool.reduce((a,x)=>a+x.weight,0),r=Math.random()*total,w=weaponGachaPool.find(x=>(r-=x.weight)<=0)||weaponGachaPool[0];d.weaponInventory=d.weaponInventory||[];d.weaponInventory.push({...w});$('weaponGachaResult').textContent=w.icon+' '+w.name+' 획득! ['+w.rarity+']';save();renderStats();renderWeaponGachaInventory()}
+$('weaponGachaDraw')?.addEventListener('click',drawWeaponGacha);
+
+
+function renderCharacter(){$('avatarFace').textContent=d.face;$('avatarHat').textContent=d.hat;$('avatarClothes').textContent=d.clothes;$('avatarHair').textContent=d.hair||'💇🏻‍♂️';$('avatarEyes').textContent=d.eye||'👀';$('avatarShoes').textContent=d.shoe||'👟';$('avatarName').textContent=d.style||'남학생 기본';['hairSelect','eyeSelect','eyeColorSelect','hairColorSelect','shoeSelect','styleSelect'].forEach((id,i)=>{let vals=[d.hair,d.eye,d.eyeColor,d.hairColor,d.shoe,d.style];if($(id)&&vals[i])$(id).value=vals[i]});$('faceSelect').value=d.face;$('hatSelect').value=d.hat;$('clothesSelect').value=d.clothes;$('avatarName').textContent=d.xp>=500?'전설의 학생':d.xp>=200?'모범 학생':'새내기 학생';let box=$('shopList');box.innerHTML='';shop.forEach(it=>{let r=document.createElement('div');r.className='shopitem';let ico=document.createElement('span');ico.style.fontSize='28px';ico.textContent=it.icon;let info=document.createElement('span');info.className='grow';let b=document.createElement('b');b.textContent=it.name;let sm=document.createElement('small');sm.textContent=it.price+' P';info.append(b,sm);let bt=document.createElement('button');bt.className='btn '+(d.owned.includes(it.id)?'alt':'');bt.textContent=d.owned.includes(it.id)?'보유 중':'구매';bt.disabled=d.owned.includes(it.id);bt.onclick=()=>{if(!isMaster&&d.points<it.price){toast('포인트가 부족해!');return}if(!isMaster)d.points-=it.price;d.owned.push(it.id);d[it.part]=it.icon;save();render()};r.append(ico,info,bt);box.append(r)});
+ let bg=$('backgroundShop');if(bg){bg.innerHTML='';[{name:'기본 배경',price:0,css:'linear-gradient(120deg,#17365d,#27345a)'},{name:'우주 배경',price:35,css:'linear-gradient(120deg,#25145a,#07152f)'},{name:'불꽃 배경',price:40,css:'linear-gradient(120deg,#7c2d12,#431407)'},{name:'숲속 배경',price:30,css:'linear-gradient(120deg,#14532d,#052e16)'},{name:'사이버 배경',price:50,css:'linear-gradient(120deg,#164e63,#312e81)'}].forEach((v,i)=>{let el=document.createElement('div');el.className='shopitem';let preview=document.createElement('div');preview.className='theme-preview';preview.style.background=v.css;let info=document.createElement('span');info.className='grow';info.innerHTML='';let b=document.createElement('b');b.textContent=v.name;let sm=document.createElement('small');sm.textContent=v.price+' P';info.append(b,sm);let bt=document.createElement('button');bt.className='btn alt';bt.textContent=d.background===v.name?'적용 중':v.price?'구매/적용':'적용';bt.onclick=()=>{if(v.price&&d.background!==v.name&&!d.owned.includes('bg'+i)){if(!isMaster&&d.points<v.price){toast('포인트가 부족해!');return}if(!isMaster)d.points-=v.price;d.owned.push('bg'+i)}d.background=v.name;document.body.style.background=v.css;save();renderStats();renderCharacter();toast('배경 적용 완료!')};el.append(preview,info,bt);bg.append(el)})}
+ renderGachaInventory();renderWeaponGachaInventory();
+}
+function renderBattle(){$('myMinutes').textContent=d.studyMinutes+'분';$('opMinutes').textContent=d.friendMinutes+'분';$('studySessions').textContent=d.sessions+'회';$('studyBest').textContent=d.studyMinutes+'분';$('goalBar').style.width=Math.min(100,d.studyMinutes/d.goal*100)+'%';$('goalText').textContent=d.studyMinutes+' / '+d.goal+'분 공부 완료';}
+function render(){renderStats();renderTasks();renderTable();renderExams();renderLost();renderRooms();renderCharacter();renderBattle()}
+$('taskAdd').onclick=()=>{let v=$('taskInput').value.trim();if(!v)return;d.tasks.push({id:Date.now(),name:v,done:false});$('taskInput').value='';save();renderTasks()};
+$('taskInput').onkeydown=e=>{if(e.key==='Enter')$('taskAdd').click()};
+$('subjectAdd').onclick=()=>{let day=$('day').value,v=$('subject').value.trim();if(!v)return;if(d.subjects[day].length>=4){toast('하루 4과목까지 등록 가능해.');return}d.subjects[day].push(v);$('subject').value='';save();renderTable()};
+$('examAdd').onclick=()=>{let name=$('examName').value.trim(),date=$('examDate').value;if(!name||!date){toast('시험 이름과 날짜를 입력해 줘.');return}d.exams.push({id:Date.now(),name,date});$('examName').value='';$('examDate').value='';save();renderExams()};
+$('missionNew').onclick=()=>{let a=['쉬는 시간에 스트레칭하기!','물 한 컵 마시기!','오늘 배운 내용 5분 복습하기!','친구에게 먼저 인사하기!','책상 정리 3분 하기!'];$('mission').textContent=a[Math.floor(Math.random()*a.length)];d.missionDone=false;save()};
+$('missionDone').onclick=()=>{if(d.missionDone){toast('오늘 미션은 이미 완료했어!');return}d.missionDone=true;d.points+=5;save();renderStats();toast('미션 완료! +5P')};
+$('lostAdd').onclick=()=>{let name=$('lostName').value.trim(),place=$('lostPlace').value.trim(),note=$('lostNote').value.trim();if(!name||!place){toast('물건 이름과 장소를 입력해 줘.');return}d.lost.push({id:Date.now(),name,place,note,done:false});['lostName','lostPlace','lostNote'].forEach(x=>$(x).value='');save();renderLost();toast('분실물 등록 완료!')};$('lostSearch').oninput=renderLost;
+$('roomAdd').onclick=()=>{let subject=$('roomSubject').value.trim(),teacher=$('roomTeacher').value.trim(),location=$('roomLocation').value.trim();if(!subject||!location){toast('과목과 교실 위치를 입력해 줘.');return}d.rooms.push({id:Date.now(),subject,teacher,location});['roomSubject','roomTeacher','roomLocation'].forEach(x=>$(x).value='');save();renderRooms();toast('교실 추가 완료!')};$('roomSearch').oninput=renderRooms;
+$('equip').onclick=()=>{d.face=$('faceSelect').value;d.hat=$('hatSelect').value;d.clothes=$('clothesSelect').value;d.hair=$('hairSelect').value;d.eye=$('eyeSelect').value;d.eyeColor=$('eyeColorSelect').value;d.hairColor=$('hairColorSelect').value;d.shoe=$('shoeSelect').value;d.style=$('styleSelect').value;save();renderCharacter();toast('캐릭터 변경 완료!')};
+$('goalSet').onclick=()=>{d.goal=Number($('studyGoal').value);save();renderBattle();toast('공부 목표를 설정했어!')};
+$('setFriend').onclick=()=>{let n=Number($('friendMinutes').value);if(!Number.isFinite(n)||n<0||n>1440){toast('0~1440분으로 입력해 줘.');return}d.friendMinutes=Math.floor(n);save();renderBattle();toast('친구 기록 저장!')};
+$('compare').onclick=()=>{let msg=d.studyMinutes>d.friendMinutes?'네가 앞서고 있어! 🔥':d.studyMinutes<d.friendMinutes?'친구가 앞서고 있어! 조금 더 집중해 봐!':'동점이야! 🤝';$('battleResult').textContent=d.studyMinutes>d.friendMinutes?'승리':d.studyMinutes<d.friendMinutes?'도전 중':'무승부';$('battleMessage').textContent=msg};
+let timerMinutes=5,remaining=timerMinutes*60,timer=null,timerDone=false;function clock(){ $('clock').textContent=String(Math.floor(remaining/60)).padStart(2,'0')+':'+String(remaining%60).padStart(2,'0')}
+function awardStudyMinutes(minutes){d.studyMinutes=(Number(d.studyMinutes)||0)+minutes;let combined=(Number(d.studyCouponRemainder)||0)+minutes,earned=Math.floor(combined/10);d.studyCouponRemainder=combined%10;d.gameCoupons=(Number(d.gameCoupons)||0)+earned;return earned}
+$('timerToggle').onclick=()=>{if(timer){clearInterval(timer);timer=null;$('timerToggle').textContent='계속';return}if(remaining<=0)return;$('timerToggle').textContent='일시정지';timer=setInterval(()=>{remaining--;clock();if(remaining<=0){clearInterval(timer);timer=null;$('timerToggle').textContent='완료';$('timerText').textContent='집중 성공!';if(!timerDone){timerDone=true;d.points+=15;d.xp+=20;let earned=awardStudyMinutes(timerMinutes);d.sessions++;save();render();toast('집중 완료! +15P +20XP'+(earned?' · 게임 쿠폰 '+earned+'개 획득!':''))}}},1000)};
+$('timerApply').onclick=()=>{clearInterval(timer);timer=null;timerMinutes=Math.max(5,Math.round(Number($('timerPreset').value)/300)*5);remaining=timerMinutes*60;timerDone=false;$('timerToggle').textContent='시작';$('timerText').textContent=timerMinutes+'분 집중 도전!';clock()};
+$('timerReset').onclick=()=>{clearInterval(timer);timer=null;timerMinutes=Math.max(5,Math.round(Number($('timerPreset').value)/300)*5);remaining=timerMinutes*60;timerDone=false;$('timerToggle').textContent='시작';$('timerText').textContent=timerMinutes+'분 집중 도전!';clock()};
+function consumeGameCoupon(){if(isMaster)return true;if((Number(d.gameCoupons)||0)<=0){toast('게임 쿠폰이 없어! 공부 10분을 완료하면 1개 받을 수 있어.');return false}d.gameCoupons--;save();renderStats();return true}
+let memoryValue='';$('memoryStart').onclick=()=>{if(!consumeGameCoupon())return;memoryValue=String(Math.floor(1000+Math.random()*9000));$('memoryNumber').textContent=memoryValue;$('memoryMsg').textContent='숫자를 외워! 잠시 후 가려져.';setTimeout(()=>{if($('memoryNumber').textContent===memoryValue)$('memoryNumber').textContent='????';},1800)};
+$('memoryCheck').onclick=()=>{if(!memoryValue){$('memoryMsg').textContent='먼저 게임을 시작해!';return}if($('memoryAnswer').value.trim()===memoryValue){d.points+=5;save();renderStats();$('memoryMsg').textContent='정답! +5P 🎉';}else $('memoryMsg').textContent='아쉽다! 정답은 '+memoryValue;$('memoryAnswer').value='';memoryValue=''};
+const rps=['가위','바위','보'];document.querySelectorAll('[data-rps]').forEach(b=>b.onclick=()=>{if(!consumeGameCoupon())return;let you=b.dataset.rps,ai=rps[Math.floor(Math.random()*3)],win=(you==='가위'&&ai==='보')||(you==='바위'&&ai==='가위')||(you==='보'&&ai==='바위');$('rpsResult').textContent='나 '+you+' / 컴퓨터 '+ai;if(you===ai){$('rpsMsg').textContent='비겼어! 다시 도전!'}else if(win){d.points+=5;save();renderStats();$('rpsMsg').textContent='이겼다! +5P 🏆'}else $('rpsMsg').textContent='이번엔 졌어. 다시 해보자!'});$('rpsClear').onclick=()=>{$('rpsResult').textContent='❔';$('rpsMsg').textContent='이기면 +5P!'};
+let reactionTimer=null,reactionReady=false,reactionStartAt=0;$('reactionStart').onclick=()=>{if(!consumeGameCoupon())return;clearTimeout(reactionTimer);reactionReady=false;$('reactionArea').textContent='기다려...';$('reactionMsg').textContent='초록색이 되기 전에 누르면 실패!';$('reactionTap').disabled=false;reactionTimer=setTimeout(()=>{reactionReady=true;reactionStartAt=Date.now();$('reactionArea').textContent='🟢 지금!';$('reactionMsg').textContent='지금 버튼을 눌러!'},1000+Math.random()*3000)};
+$('reactionTap').onclick=()=>{if(!reactionReady){$('reactionMsg').textContent='너무 빨랐어! 다시 시작해.';$('reactionArea').textContent='⏳';clearTimeout(reactionTimer);$('reactionTap').disabled=true;return}let ms=Date.now()-reactionStartAt;$('reactionArea').textContent=ms+' ms';$('reactionMsg').textContent=ms<300?'엄청 빠르다!':ms<500?'좋은 반응속도야!':'다음엔 더 빠르게!';if(ms<450){d.points+=3;save();renderStats();toast('+3P 반응속도 보상')}reactionReady=false;$('reactionTap').disabled=true};
+$('today')?.textContent;
+
+// 과목 디펜스: 간단한 실시간 경로 방어 게임
+const subjectsWeapons=[
+ {subject:'수학',name:'각도 레이저',icon:'📐',rarity:'에픽',damage:3,cost:35},
+ {subject:'과학',name:'플라즈마 포탑',icon:'⚗️',rarity:'전설',damage:5,cost:55},
+ {subject:'영어',name:'단어 미사일',icon:'🔤',rarity:'레어',damage:2,cost:25},
+ {subject:'국어',name:'문장 폭풍',icon:'📖',rarity:'신화',damage:4,cost:45},
+ {subject:'역사',name:'시간 대포',icon:'🏺',rarity:'고대',damage:6,cost:65},
+ {subject:'사회',name:'지리 드론',icon:'🌍',rarity:'기본',damage:1,cost:15},
+ {subject:'체육',name:'파워 슛',icon:'🏀',rarity:'초월',damage:8,cost:80}
+];
+let selectedWeapon=0,defenseLoop=null,lastDefTick=0;
+function renderDefense(){
+ const box=$('weaponChoices');if(!box)return;
+ box.innerHTML='';subjectsWeapons.forEach((w,i)=>{let b=document.createElement('button');b.className='weapon-card';b.style.borderColor=i===selectedWeapon?'#38bdf8':'#527092';b.style.color='#f8fafc';b.innerHTML=`<b style="color:#fff">${w.icon} ${w.subject}</b><div style="color:#e2edff;font-weight:800">${w.name}</div><small style="color:#cbd5e1;font-weight:750">등급 ${w.rarity} · 공격력 ${w.damage} · 비용 ${w.cost}코인</small>`;b.onclick=()=>{selectedWeapon=i;$('defMessage').textContent=w.name+' 선택됨. 전투 화면을 눌러 포탑을 배치해!';renderDefense()};box.append(b)});
+ $('defGold').textContent=d.defense.gold;$('defWave').textContent=d.defense.wave;$('defLives').textContent=d.defense.coreHP??d.defense.lives;
+ const tl=$('towerList');tl.innerHTML=d.defense.towers.map(t=>`<div class="listitem">${subjectsWeapons[t.weapon].icon} ${subjectsWeapons[t.weapon].name} <span class="grow"></span><small>Lv.${t.level||1}</small></div>`).join('')||'<div class="muted">아직 배치한 포탑이 없어.</div>';
+ drawDefense();
+}
+const DEF_GRID=50,DEF_CELL=10,DEF_CENTER=25;
+function drawDefense(){
+ const c=$('defenseCanvas');if(!c)return;const ctx=c.getContext('2d'),w=500,h=500;ctx.clearRect(0,0,w,h);
+ ctx.fillStyle='#0b1727';ctx.fillRect(0,0,w,h);
+ // 50 x 50 tile grid
+ for(let y=0;y<DEF_GRID;y++)for(let x=0;x<DEF_GRID;x++){
+  ctx.fillStyle=((x+y)%2===0)?'#14263a':'#172b40';ctx.fillRect(x*DEF_CELL,y*DEF_CELL,DEF_CELL,DEF_CELL);
+ }
+ ctx.strokeStyle='#31465e';ctx.lineWidth=.5;
+ for(let i=0;i<=DEF_GRID;i++){ctx.beginPath();ctx.moveTo(i*DEF_CELL,0);ctx.lineTo(i*DEF_CELL,500);ctx.stroke();ctx.beginPath();ctx.moveTo(0,i*DEF_CELL);ctx.lineTo(500,i*DEF_CELL);ctx.stroke()}
+ // Four entry lanes from north, south, east and west toward the center.
+ ctx.strokeStyle='#64748b';ctx.lineWidth=24;ctx.lineCap='round';
+ [[250,0,250,250],[250,500,250,250],[500,250,250,250],[0,250,250,250]].forEach(a=>{ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(a[2],a[3]);ctx.stroke()});
+ ctx.strokeStyle='#cbd5e1';ctx.lineWidth=1.5;ctx.setLineDash([6,5]);
+ [[250,0,250,250],[250,500,250,250],[500,250,250,250],[0,250,250,250]].forEach(a=>{ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(a[2],a[3]);ctx.stroke()});ctx.setLineDash([]);
+ // Central 500 HP core occupies a 5x5 tile footprint.
+ const coreX=225,coreY=225;ctx.fillStyle='#7c2d12';ctx.fillRect(coreX,coreY,50,50);
+ ctx.strokeStyle='#fb923c';ctx.lineWidth=3;ctx.strokeRect(coreX+1.5,coreY+1.5,47,47);
+ ctx.fillStyle='#ffedd5';ctx.font='bold 18px sans-serif';ctx.textAlign='center';ctx.fillText('◆',250,247);
+ ctx.font='bold 10px sans-serif';ctx.fillText('CORE',250,260);
+ ctx.textAlign='left';
+ d.defense.towers.forEach(t=>{ctx.fillStyle='#38bdf8';ctx.beginPath();ctx.arc(t.x,t.y,6,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#e0f2fe';ctx.lineWidth=1;ctx.stroke();ctx.fillStyle='#082f49';ctx.font='10px sans-serif';ctx.fillText(subjectsWeapons[t.weapon].icon,t.x-4,t.y+3)});
+ d.defense.enemies.forEach(e=>{ctx.fillStyle=e.direction==='north'?'#fb7185':e.direction==='south'?'#f97316':e.direction==='east'?'#c084fc':'#facc15';ctx.beginPath();ctx.arc(e.x,e.y,5,0,Math.PI*2);ctx.fill();ctx.fillStyle='white';ctx.font='8px sans-serif';ctx.fillText(Math.ceil(e.hp),e.x-4,e.y-7)});
+ ctx.fillStyle='#e2e8f0';ctx.font='10px sans-serif';ctx.fillText('50 × 50 GRID',7,12);
+}
+function addTowerAt(x,y){
+ const w=subjectsWeapons[selectedWeapon],gx=Math.max(0,Math.min(49,Math.floor(x/DEF_CELL))),gy=Math.max(0,Math.min(49,Math.floor(y/DEF_CELL)));
+ const cx=gx*DEF_CELL+5,cy=gy*DEF_CELL+5;
+ if(gx>=22&&gx<=27&&gy>=22&&gy<=27){$('defMessage').textContent='중앙 코어 주변에는 포탑을 설치할 수 없어.';return}
+ if(d.defense.gold<w.cost){$('defMessage').textContent='코인이 부족해! 몬스터를 처치해 코인을 모아 봐.';return}
+ if(d.defense.towers.length>=50){$('defMessage').textContent='포탑은 최대 50개까지 배치할 수 있어.';return}
+ if(d.defense.towers.some(t=>Math.hypot(t.x-cx,t.y-cy)<2)){$('defMessage').textContent='그 칸에는 이미 포탑이 있어.';return}
+ d.defense.gold-=w.cost;d.defense.towers.push({x:cx,y:cy,weapon:selectedWeapon,level:1});renderDefense()
+}
+$('defenseCanvas').onclick=e=>{let r=e.target.getBoundingClientRect(),x=(e.clientX-r.left)*500/r.width,y=(e.clientY-r.top)*500/r.height;addTowerAt(x,y)};
+function spawnEnemy(){
+ const dirs=['north','south','east','west'],direction=dirs[Math.floor(Math.random()*dirs.length)];
+ const pos={north:[250,0],south:[250,500],east:[500,250],west:[0,250]}[direction];
+ d.defense.enemies.push({x:pos[0],y:pos[1],hp:8+d.defense.wave*2,direction});
+}
+function tickDefense(){
+ d.defense.enemies.forEach(e=>{
+  const dx=250-e.x,dy=250-e.y,dist=Math.hypot(dx,dy);
+  if(dist<8){e.hp=0;d.defense.coreHP=Math.max(0,(d.defense.coreHP??d.defense.lives)-10);d.defense.lives=d.defense.coreHP;return}
+  const speed=1.25+Math.min(1,d.defense.wave*.03);e.x+=dx/dist*speed;e.y+=dy/dist*speed;
+ });
+ d.defense.towers.forEach(t=>{
+  let target=d.defense.enemies.find(e=>e.hp>0&&Math.hypot(e.x-t.x,e.y-t.y)<65);
+  if(target){target.hp-=subjectsWeapons[t.weapon].damage*.08;if(target.hp<=0){d.defense.gold+=8;d.points+=1}}
+ });
+ d.defense.enemies=d.defense.enemies.filter(e=>e.hp>0);
+ if(Date.now()-lastDefTick>1200){spawnEnemy();lastDefTick=Date.now()}
+ if((d.defense.coreHP??d.defense.lives)<=0){clearInterval(defenseLoop);defenseLoop=null;d.defense.running=false;$('defMessage').textContent='중앙 코어가 파괴됐어! 초기화하고 다시 도전해 봐.'}
+ renderDefense();save();
+}
+$('defStart').onclick=()=>{if(defenseLoop){return}if(!consumeGameCoupon()){ $('defMessage').textContent='게임 쿠폰이 없어! 공부 10분을 완료하면 쿠폰 1개를 받을 수 있어.';return}d.defense.running=true;lastDefTick=Date.now();defenseLoop=setInterval(tickDefense,100);$('defMessage').textContent='전투 중! 화면을 눌러 포탑을 추가 배치해.'};
+$('defNext').onclick=()=>{if(!defenseLoop){$('defMessage').textContent='먼저 게임 쿠폰 1개로 전투를 시작해 줘.';toast('전투 중에만 다음 웨이브로 갈 수 있어!');return}d.defense.wave++;d.defense.gold+=20;renderDefense();save();$('defMessage').textContent='웨이브 '+d.defense.wave+' 시작 준비 완료! +20 코인'};
+$('defReset').onclick=()=>{clearInterval(defenseLoop);defenseLoop=null;d.defense={gold:100,wave:1,lives:500,coreHP:500,towers:[],enemies:[],running:false};renderDefense();save();$('defMessage').textContent='전투가 초기화됐어.'};
+
+
+function renderAdminUsers(){
+ const box=$('adminUsers');if(!box||!isMaster)return;const a=accounts();box.innerHTML='';
+ const emails=Object.keys(a);
+ if(!emails.length){box.innerHTML='<div class="muted">가입된 일반 계정이 아직 없어.</div>';return}
+ emails.forEach(email=>{let row=document.createElement('div');row.className='listitem';let label=document.createElement('span');label.className='grow';label.textContent=email;let reset=document.createElement('button');reset.className='btn alt';reset.textContent='데이터 초기화';reset.onclick=()=>{if(confirm(email+'의 학교생활 데이터를 초기화할까?')){localStorage.removeItem(dataKey(email));toast('사용자 데이터 초기화 완료')}};let del=document.createElement('button');del.className='delete';del.textContent='계정 삭제';del.onclick=()=>{if(confirm(email+' 계정을 삭제할까?')){let a2=accounts();delete a2[email];localStorage.setItem(ACCOUNT_KEY,JSON.stringify(a2));localStorage.removeItem(dataKey(email));renderAdminUsers();toast('계정 삭제 완료')}};row.append(label,reset,del);box.append(row)})
+}
+$('adminRefreshUsers')?.addEventListener('click',renderAdminUsers);
+$('adminGivePoints')?.addEventListener('click',()=>{
+ if(!isMaster)return;let email=$('adminUserEmail').value.trim().toLowerCase(),amount=Number($('adminPointAmount').value);
+ if(!accounts()[email]){$('adminPointMsg').textContent='해당 ID의 가입 계정을 찾을 수 없어.';return}
+ if(!Number.isFinite(amount)||amount<=0){$('adminPointMsg').textContent='0보다 큰 포인트를 입력해 줘.';return}
+ let key=dataKey(email),u;try{u={...defaults,...JSON.parse(localStorage.getItem(key)||'{}')}}catch{u={...defaults}}
+ u.points=(Number(u.points)||0)+Math.floor(amount);localStorage.setItem(key,JSON.stringify(u));$('adminPointMsg').textContent=email+' ID에 '+Math.floor(amount)+'P 지급 완료!';$('adminPointAmount').value='';
+});
+$('adminResetOwn')?.addEventListener('click',()=>{if(!isMaster)return;if(confirm('마스터 계정의 학교생활 데이터를 초기화할까?')){localStorage.removeItem(dataKey('master'));d={...defaults,points:999999999,gameCoupons:999999999,owned:shop.map(x=>x.id)};save();render();renderDefense();toast('마스터 데이터 초기화 완료')}});
+
+if('serviceWorker'in navigator&&location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script></body></html>
